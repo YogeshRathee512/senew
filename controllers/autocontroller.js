@@ -32,10 +32,10 @@ const signUpController = async (req, res) => {
 
       try {
         await user.save();
-        res.status(201).json({
-          message: "Account created successfully!",
-        });
-        // res.send(success(201, "Account created successfully!"));
+        // res.status(201).json({
+        //   message: "Account created successfully!",
+        // });
+        res.send(success(201, "Account created successfully!"));
       } catch (err) {
         if (err.name === "ValidationError") {
           // res.status(400).json({
