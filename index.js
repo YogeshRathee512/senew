@@ -5,6 +5,7 @@ dotenv.config();
 const mongoConnect = require("./database");
 const authrouter = require("./routers/authrouter");
 const productrouter = require("./routers/productrouter");
+const orderrouter = require("./routers/orderrouter");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 
@@ -18,9 +19,10 @@ app.use(
 );
 
 mongoConnect();
-
+app.use("/orders", orderrouter);
 app.use("/auth", authrouter);
 app.use("/products", productrouter);
+
 app.get("/", (req, res) => {
   res.status(200).send("hello");
 });
