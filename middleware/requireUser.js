@@ -10,19 +10,19 @@ const REFRESH_TOKEN_PRIVATE_KEY =
   "a1b5e8d2f6c90e4d7a8f43c1629d0b5e3d2f6a1b5e8d2f6c90e4d7a8f43c1629d0";
 
 module.exports = async (req, res, next) => {
-  if (
-    !req.headers ||
-    !req.headers.authorization ||
-    !req.headers.authorization.startsWith("Bearer")
-  ) {
-    return res.send(error(401, "Authorization is required"));
-  }
+  // if (
+  //   !req.headers ||
+  //   !req.headers.authorization ||
+  //   !req.headers.authorization.startsWith("Bearer")
+  // ) {
+  //   return res.send(error(401, "Authorization is required"));
+  // }
 
-  const accessToken = req.headers.authorization.split(" ")[1];
+  // const accessToken = req.headers.authorization.split(" ")[1];
 
   try {
-    const decode = jwt.verify(accessToken, REFRESH_TOKEN_PRIVATE_KEY);
-    req._id = decode._id;
+    // const decode = jwt.verify(accessToken, REFRESH_TOKEN_PRIVATE_KEY);
+    // req._id = decode._id;
     next(); // Call next() only if the JWT is successfully verified
   } catch (e) {
     console.log(e);

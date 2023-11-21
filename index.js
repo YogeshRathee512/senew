@@ -11,12 +11,7 @@ const cors = require("cors");
 
 app.use(express.json());
 app.use(cookieParser());
-app.use(
-  cors({
-    credentials: true,
-    origin: "http://localhost:3000", // Correct the origin
-  })
-);
+app.use(cors({}));
 
 mongoConnect();
 app.use("/orders", orderrouter);

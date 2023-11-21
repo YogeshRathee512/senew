@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 const { error, success } = require("../utlis/responseWrapper");
 
 const addNewProducts = async (req, res) => {
+  try {
   const image = req.body.image;
   const id = req.body.id;
   const count = req.body.count;
@@ -14,16 +15,12 @@ const addNewProducts = async (req, res) => {
   //const existingProduct = await findProductById(id);
   const existingProduct = await Product.findOne({ id: id });
   if (existingProduct) {
-    // Product already exists, so increase the count
-    existingProduct.count += count;
-    await existingProduct.save();
-    console.log("product added ");
-    // Send a message that the count was increased
-    res.send(success(200, "Product count increased successfully!"));
-    return;
+    return res.status(403).json({
+      message: "Product already exists"
+    })
   }
 
-  const product = new Product({
+  const product = await Product.create({
     image: image,
     id: id,
     count: count,
@@ -33,12 +30,14 @@ const addNewProducts = async (req, res) => {
     minCount: minCount,
   });
 
-  try {
-    await product.save();
-    res.send(success(201, "Product added successfully!"));
+  return res.status(200).json({
+    message: "Product added successfully!"
+  })
+
   } catch (err) {
-    console.log(err);
-    res.send(error(500, "error while saving in dataBase"));
+    return res.status(501).json({
+      message: "Server error!"
+    })
   }
 };
 
@@ -47,4 +46,18 @@ const findProductById = async (id) => {
   return product;
 };
 
-module.exports = { addNewProducts };
+const getAllProducts = async (req, res) => {
+  try {
+    const products = await Product.find({})
+    return res.status(200).json(products)
+  }
+  catch(err)
+  {
+    console.log(err)
+    return res.status(501).json({
+      message: "Server error!"
+    })
+  }
+}
+
+module.exports = { addNewProducts, getAllProducts };
