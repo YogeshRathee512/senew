@@ -38,6 +38,12 @@ const getAllOrders = async (req, res, next) => {
   });
 };
 
+const getLatestOrders = async (req, res, next) => {
+  const orders = await Order.find().sort({ createdAt: -1 }).exec();
+
+  res.status(200).json(orders);
+};
+
 const updateOrderStatus = async (req, res, next) => {
   const order = await Order.findById(req.params.id);
 
@@ -84,4 +90,4 @@ const deleteOrder = async (req, res, next) => {
 
   res.send(success(200, "Order removed successfully"));
 };
-module.exports = { addNewOrders, getAllOrders, updateOrderStatus, deleteOrder };
+module.exports = { addNewOrders, getAllOrders, getLatestOrders, updateOrderStatus, deleteOrder };

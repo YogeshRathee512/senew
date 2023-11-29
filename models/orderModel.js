@@ -1,6 +1,20 @@
 const mongoose = require("mongoose");
 
 const orderSchema = new mongoose.Schema({
+  orderId: {
+    type: String,
+    required: true,
+    validate: {
+      validator: function (value) {
+        return /^[a-zA-Z0-9]+$/.test(value);
+      },
+      message: "ID must be an alpha numeric value.",
+    },
+  },
+  customerName: {
+    type: String,
+    required: true,
+  },
   shippingInfo: {
     address: {
       type: String,
