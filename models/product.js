@@ -2,14 +2,8 @@ const mongoose = require("mongoose");
 
 const productSchema = new mongoose.Schema({
   image: {
-    type: Buffer,
-    // required: true,
-    // validate: {
-    //   validator: function (value) {
-    //     return value.mimetype === "image/png";
-    //   },
-    //   message: "Image must be a PNG file.",
-    // },
+    type: String,
+    required: true,
   },
   id: {
     type: String,

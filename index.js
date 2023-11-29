@@ -22,7 +22,7 @@ app.get("/", (req, res) => {
   res.status(200).send("hello");
 });
 
-const port = process.env.port || 4001;
+const port = process.env.PORT || 4001;
 
 app.listen(port, () => {
   console.log(`listing on port number , ${port}`);
