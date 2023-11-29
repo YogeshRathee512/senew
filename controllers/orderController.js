@@ -90,4 +90,22 @@ const deleteOrder = async (req, res, next) => {
 
   res.send(success(200, "Order removed successfully"));
 };
-module.exports = { addNewOrders, getAllOrders, getLatestOrders, updateOrderStatus, deleteOrder };
+
+const updateOrder = async (req, res, next) => {
+  const order = await Order.findOne({orderId: req.User.orderId});
+
+  if (!order) {
+    return next(new ErrorHander("Order not found with this Id", 404));
+  }
+
+  order.paymentInfo.status = "Paid"
+  order.orderStatus = "Delivered"
+
+  await order.save()
+
+  return res.status(200).json({
+    message: "Order updated successfully!",
+  });
+};
+
+module.exports = { addNewOrders, getAllOrders, getLatestOrders, updateOrderStatus, deleteOrder, updateOrder };
