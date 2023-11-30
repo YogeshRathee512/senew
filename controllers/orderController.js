@@ -92,20 +92,28 @@ const deleteOrder = async (req, res, next) => {
 };
 
 const updateOrder = async (req, res, next) => {
-  const order = await Order.findOne({orderId: req.User.orderId});
+  console.log(req.body);
+  const order = await Order.findOne({ orderId: req.body.orderId });
 
   if (!order) {
     return next(new ErrorHander("Order not found with this Id", 404));
   }
 
-  order.paymentInfo.status = "Paid"
-  order.orderStatus = "Delivered"
+  order.paymentInfo.status = "Paid";
+  order.orderStatus = "Delivered";
 
-  await order.save()
+  await order.save();
 
   return res.status(200).json({
     message: "Order updated successfully!",
   });
 };
 
-module.exports = { addNewOrders, getAllOrders, getLatestOrders, updateOrderStatus, deleteOrder, updateOrder };
+module.exports = {
+  addNewOrders,
+  getAllOrders,
+  getLatestOrders,
+  updateOrderStatus,
+  deleteOrder,
+  updateOrder,
+};

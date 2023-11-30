@@ -11,10 +11,6 @@ const orderSchema = new mongoose.Schema({
       message: "ID must be an alpha numeric value.",
     },
   },
-  customerName: {
-    type: String,
-    required: true,
-  },
   shippingInfo: {
     address: {
       type: String,
