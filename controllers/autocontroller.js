@@ -15,6 +15,7 @@ const signUpController = async (req, res) => {
     const role = req.body.role;
     const email = req.body.email;
     const password = req.body.password;
+    const phoneNo = req.body.phoneNo;
 
     if (!email || !password) {
       return res.send(error(400, "both field are required"));
@@ -22,7 +23,8 @@ const signUpController = async (req, res) => {
       const salt = await bcrypt.genSalt(10);
       const hash = await bcrypt.hash(password, salt);
 
-      const user = new User({
+      console.log(req.body);
+      const user = await User.create({
         email: email,
         password: hash,
         role: role,
@@ -30,12 +32,14 @@ const signUpController = async (req, res) => {
         phoneNo: phoneNo,
       });
 
+      return res.status(200).json({
+        message: "Accountant updated successfully!",
+      });
+
       try {
-        await user.save();
         // res.status(201).json({
         //   message: "Account created successfully!",
         // });
-        res.send(success(201, "Account created successfully!"));
       } catch (err) {
         if (err.name === "ValidationError") {
           // res.status(400).json({
